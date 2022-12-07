@@ -6,12 +6,14 @@ public class CarController : MonoBehaviour
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
+    public Camera camTwo2;
 
     private float horizontalInput;
     private float verticalInput;
     private float currentSteerAngle; //arabanýn saða sola dönmesini kontrol eden açý deðiþkeni 
     private float currentbreakForce; //anlýk fren kuvveti 
     private bool isBreaking; // fren yapýyormu yapmýyormu 
+    private bool cameraTwo; // 2.Kamera Açýldýs
 
     [SerializeField] private float motorForce; // motor kuvveti 
     [SerializeField] private float breakForce; //Fren Kuvveti 
@@ -21,11 +23,13 @@ public class CarController : MonoBehaviour
     [SerializeField] private WheelCollider frontRightWheelCollider;  //Tekerlerin colliderlarý
     [SerializeField] private WheelCollider rearLeftWheelCollider;
     [SerializeField] private WheelCollider rearRightWheelCollider;
+    [SerializeField] private WheelCollider steelCollider; // direksyonun collidarý 
 
     [SerializeField] private Transform frontLeftWheelTransform;
     [SerializeField] private Transform frontRightWheelTransform;    //Tekerlerin transformlarý
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
+    [SerializeField] private Transform steelTransform; // direksyonun transformu 
 
 
     private void FixedUpdate()
@@ -43,12 +47,13 @@ public class CarController : MonoBehaviour
         horizontalInput = Input.GetAxis(HORIZONTAL);
         verticalInput = Input.GetAxis(VERTICAL);
         isBreaking = Input.GetKey(KeyCode.Space);
-
+        cameraTwo = Input.GetKey(KeyCode.F);
 
 
     }
     private void HandleMotor()
     {
+       
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         currentbreakForce = isBreaking  ? breakForce : 0f; // "?" ife benzer bir koþuldur ":" ise deðer atýyoruz koþul saðlanýyorsa 
